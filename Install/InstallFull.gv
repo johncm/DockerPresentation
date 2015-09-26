@@ -1,0 +1,28 @@
+digraph Install {
+	graph [bb="0 0 781 626", id=Install, label=Install, labelloc=t, compound=true, color=green];
+	node [label="\N", style=bold, color=green, shape=box];
+	edge [constraint=true, style=bold];
+	subgraph cluster_LinuxWorkstation {
+		graph [label="Linux Workstation/Server\nLinux Kernel >= \"3.10 at minimum\"",
+			URL="https://docs.docker.com/installation/"];
+		node [shape=ellipse];
+		LinuxWorkstation [style=invis, shape=point];
+		Docker [label="Docker Engine or \"Docker\"\nUbuntu: curl -sSL https://get.docker.com/ | sh", shape=none];
+		Docker -> LinuxWorkstation;
+	}
+	subgraph cluster_Windows {
+		graph [label="\"Windows 7.1, 8/8.1 or newer\"\n\"supports Hardware Virtualization Technology\"\nDocker Toolbox",
+			URL="https://www.docker.com/toolbox"];
+		subgraph cluster_VirtualBox {
+			graph [label=VirtualBox];
+			VirtualBox [style=invis, shape=point];
+			Boot2Docker;
+		}
+	}
+	subgraph cluster_VM {
+		graph [label="Virtual Machine\nVirtualBox / VMWare / Cloud"];
+		LinuxServer [label="Linux Server"];
+	}
+	LinuxWorkstation -> Boot2Docker [ltail=cluster_LinuxWorkstation];
+	LinuxWorkstation -> LinuxServer [ltail=cluster_LinuxWorkstation, label="docker-machine"];
+}
