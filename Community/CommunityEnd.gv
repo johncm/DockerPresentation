@@ -1,0 +1,77 @@
+digraph Community {
+	graph [bb="0 0 781 626", id=Community, label="Open Source Community", labelloc=t, compound=true, color=green];
+	node [label="\N", style=bold, color=green, shape=box];
+	edge [constraint=true, style=bold];
+	subgraph cluster_Lengend {
+		graph [label="Legend:",
+			color=white,
+			labeljust=l,
+			style=filled];
+		SecureService [label="Secure Web\nService", style=solid, color=black, peripheries=2];
+		Git [label=Git, style=filled, color=blue, fontcolor=white];
+		OfficialContainer [label=Official, color=gold];
+	}
+	subgraph cluster_Internet {
+		graph [label=Internet,
+			color=gray,
+			style=filled];
+		subgraph cluster_DockerHub {
+			graph [label="Docker Hub (default)\nhub.docker.com",
+				color=white,
+				URL="https://hub.docker.com/login"];
+			DockerHub [label="Docker Registry\nlibrary/\n<user>/\n<organization>/", peripheries=2, id="\N"];
+		}
+		subgraph cluster_Quayio {
+			graph [label="Quay.io\nquay.io",
+				color=white,
+				URL="https://quay.io/signin"];
+			Quayio [label="Docker Registry\nquay.io/<user>/\nquay.io/<organization>/", peripheries=2, id="\N"];
+		}
+		Internet [style=invis, shape=point];
+		GitHub [label="Git Hub\ngithub.com", style=filled, color=blue, peripheries=2, fontcolor=white, id="\N", URL="https://github.com/login"];
+		GitHub -> DockerHub [arrowtail=empty, dir=both];
+		GitHub -> Quayio [arrowtail=empty, dir=both];
+	}
+	subgraph cluster_Containers {
+		graph [label=Containers,
+			color=blue,
+			rank=same];
+		node [shape=record];
+		subgraph cluster_Containers_DockerHub {
+			graph [label="Docker Hub (Images)"];
+			subgraph cluster_Containers_DockerHub_Library {
+				graph [label=library,
+					color=gold];
+				Containers_DockerHub_Library [style=invis, shape=point];
+				Scratch [label=scratch];
+				Ubuntu [label=ubuntu];
+				Nginx [label=nginx];
+				Scratch -> Ubuntu [arrowtail=empty, dir=back];
+				Scratch -> Nginx [arrowtail=empty, dir=back];
+			}
+			subgraph cluster_Containers_DockerHub_User {
+				graph [label="<user> | <organization>"];
+				Containers_DockerHub_User [style=invis, shape=point];
+				True [label="tianon/true"];
+				New [label="johncm/new-container-name"];
+				True -> New [arrowtail=empty, dir=back];
+			}
+			Containers_DockerHub [style=invis, shape=point];
+			Scratch -> True [arrowtail=empty, dir=back];
+		}
+		subgraph cluster_Containers_Quayio {
+			graph [label="Quay.io (Images)"];
+			subgraph cluster_Containers_Quayio_User {
+				graph [label="<user> | <organization>"];
+				Containers_Quayio_User [style=invis, shape=point];
+				NewQuay [label="quay.io/johncm/new-container-name"];
+			}
+			Containers_Quayio [style=invis, shape=point];
+		}
+		Containers [style=invis, shape=point];
+		NewQuay -> New [dir=back, label=tag];
+	}
+	DockerHub -> Containers_DockerHub [label=pull, lhead=cluster_Containers_DockerHub];
+	Quayio -> Containers_Quayio [label=pull, lhead=cluster_Containers_Quayio];
+	Quayio -> NewQuay [dir=back, label=push];
+}

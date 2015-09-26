@@ -1,0 +1,53 @@
+digraph Community {
+	graph [bb="0 0 781 626", id=Community, label="Open Source Community", labelloc=t, compound=true, color=green];
+	node [label="\N", style=bold, color=green, shape=box];
+	edge [constraint=true, style=bold];
+	subgraph cluster_Lengend {
+		graph [label="Legend:",
+			color=white,
+			labeljust=l,
+			style=filled];
+		SecureService [label="Secure Web\nService", style=solid, color=black, peripheries=2];
+		Git [label=Git, style=filled, color=blue, fontcolor=white];
+	}
+	subgraph cluster_Internet {
+		graph [label=Internet,
+			color=gray,
+			style=filled];
+		subgraph cluster_DockerHub {
+			graph [label="Docker Hub (default)\nhub.docker.com",
+				color=white,
+				URL="https://hub.docker.com/login"];
+			DockerHub [label="Docker Registry\nlibrary/\n<user>/\n<organization>/", peripheries=2, id="\N"];
+		}
+		subgraph cluster_Quayio {
+			graph [label="Quay.io\nquay.io",
+				color=white,
+				URL="https://quay.io/signin"];
+			Quayio [label="Docker Registry\nquay.io/<user>/\nquay.io/<organization>/", peripheries=2, id="\N"];
+		}
+		subgraph cluster_Free {
+			graph [label="Free:",
+				color=white,
+				labeljust=l];
+			Free [label="Open Source Projects"];
+		}
+		subgraph cluster_Subscription {
+			graph [label="Subscription:",
+				color=white,
+				labeljust=l];
+			Subscription [label="Restricted Projects"];
+		}
+		Internet [style=invis, shape=point];
+		GitHub [label="Git Hub\ngithub.com", style=filled, color=blue, peripheries=2, fontcolor=white, id="\N", URL="https://github.com/login"];
+		GitLab [label="Git Lab\ngitlab.com", style=filled, color=blue, peripheries=2, fontcolor=white, id="\N", URL="https://gitlab.com/users/sign_in"];
+		GitHub -> DockerHub [arrowtail=empty, dir=both];
+		GitHub -> Quayio [arrowtail=empty, dir=both];
+		GitLab -> DockerHub [style=dashed, arrowtail=empty, dir=both];
+		GitLab -> Quayio [style=dashed, arrowtail=empty, dir=both];
+		DockerHub -> Free;
+		Quayio -> Free;
+		DockerHub -> Subscription [lhead=cluster_Subscription];
+		Quayio -> Subscription [lhead=cluster_Subscription];
+	}
+}

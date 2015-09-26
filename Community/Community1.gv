@@ -1,0 +1,38 @@
+digraph Community {
+	graph [bb="0 0 781 626", id=Community, label="Open Source Community", labelloc=t, compound=true, color=green];
+	node [label="\N", style=bold, color=green, shape=box];
+	edge [constraint=true, style=bold];
+	subgraph cluster_Lengend {
+		graph [label="Legend:",
+			color=white,
+			labeljust=l,
+			style=filled];
+		SecureService [label="Secure Web\nService", style=solid, color=black, peripheries=2];
+		Git [label=Git, style=filled, color=blue, fontcolor=white];
+	}
+	subgraph cluster_Internet {
+		graph [label=Internet,
+			color=gray,
+			style=filled];
+		subgraph cluster_Free {
+			graph [label="Free:",
+				color=white,
+				labeljust=l];
+			Free [label="Open Source Projects"];
+		}
+		subgraph cluster_Subscription {
+			graph [label="Subscription:",
+				color=white,
+				labeljust=l];
+			Subscription [label="Restricted Projects"];
+		}
+		Internet [style=invis, shape=point];
+		GitHub [label="Git Hub\ngithub.com", style=filled, color=blue, peripheries=2, fontcolor=white, id="\N", URL="https://github.com/login"];
+		GitLab [label="Git Lab\ngitlab.com", style=filled, color=blue, peripheries=2, fontcolor=white, id="\N", URL="https://gitlab.com/users/sign_in"];
+		Other [label="Other\nSource Repo", style=filled, color=blue, peripheries=2, fontcolor=white, id="\N"];
+		GitHub -> Free;
+		GitLab -> Free;
+		GitHub -> Subscription [lhead=cluster_Subscription];
+		GitLab -> Subscription [lhead=cluster_Subscription];
+	}
+}
