@@ -54,4 +54,6 @@ Community
 	tag
 	push
 	export
-	
+
+Project for Docker Presentation files.
+rsync -rvCFF $PWD/ admin@192.168.0.56:/volume1/web/devSites/docker
