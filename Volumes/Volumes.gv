@@ -1,0 +1,24 @@
+graph Volumes {
+	graph [bb="0 0 781 626", id=Volumes, label="Volumes (Mounts)", labelloc=t, compound=true, color=green];
+	node [label="\N", style=bold, color=green];
+	edge [constraint=true, style=bold];
+	subgraph cluster_Docker {
+		graph [label="Data Volume\nDocker",
+			color=black];
+		VolumeSwitch [label="-v <volume>(:ro)\noverwrite"];
+		VolumeCommand [label="(Dockerfile) VOLUME [\"<volume>\"]"];
+		DataVolume [label="Data Volume"];
+		DataVolume -- VolumeSwitch;
+		VolumeCommand -- DataVolume;
+		VolumeSwitch -- VolumeCommand;
+	}
+	subgraph cluster_User {
+		graph [label="Data Volume\nUser",
+			color=black];
+		VolumeSwitchMount [label="-v <src>:<volume>(:ro)\ncopy"];
+		VolumeSource [label="<src>"];
+		VolumeSwitchMount -- VolumeSource;
+	}
+	VolumeCommand -- VolumeSwitchMount;
+	DataVolume -- VolumeSource [label="docker cp"];
+}
