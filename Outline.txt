@@ -1,0 +1,57 @@
+Bare Metal to Partitions
+Partitions to VMs
+Containers vs VMs
+Community
+	Source Repos
+	Docker Repos
+	Containers
+Install
+	PreReqs/Docker
+		Linux
+		Boot2Docker (Windows)
+		VMs (docker-machine)
+First Container
+	scratch -> tianon/true
+(Demo)
+	search
+	pull
+	create
+		GutHub Project
+		Dockerfile
+		Left of <container>
+		Right of <container>
+	run
+Run As a:
+	Command
+		Perl
+		Graphviz	
+Data Volumes:
+	Containers Layers vs Data Volumes
+	-v <volume>
+		docker inspect <CID>
+	-v <path>:<volume> (:ro)
+	Files Vs Directories
+	VOLUMES - Dockerfile
+	Data Containers
+		Container Reuse
+		New
+	Dangling Volumes
+		rm -v
+	docker cp in/out
+Run As a:
+	Service
+		Nginx
+			Expose
+			docker top
+			docker logs
+Dockerfile
+Docker-Compose
+	yml
+Docker-Machine
+Community
+	Docker Repos
+	login/registration
+	tag
+	push
+	export
+	
